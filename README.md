@@ -35,32 +35,38 @@ limitations under the License.
 
 > Replace single-precision complex floating-point strided array elements equal to a provided search element with a specified scalar constant.
 
-<section class="installation">
 
-## Installation
-
-```bash
-npm install @stdlib/blas-ext-base-cfill-equal
-```
-
-Alternatively,
-
--   To load the package in a website via a `script` tag without installation and bundlers, use the [ES Module][es-module] available on the [`esm`][esm-url] branch (see [README][esm-readme]).
--   If you are using Deno, visit the [`deno`][deno-url] branch (see [README][deno-readme] for usage intructions).
--   For use in Observable, or in browser/node environments, use the [Universal Module Definition (UMD)][umd] build available on the [`umd`][umd-url] branch (see [README][umd-readme]).
-
-The [branches.md][branches-url] file summarizes the available branches and displays a diagram illustrating their relationships.
-
-To view installation and usage instructions specific to each branch build, be sure to explicitly navigate to the respective README files on each branch, as linked to above.
-
-</section>
 
 <section class="usage">
 
 ## Usage
 
+To use in Observable,
+
 ```javascript
-var cfillEqual = require( '@stdlib/blas-ext-base-cfill-equal' );
+cfillEqual = require( 'https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-cfill-equal@umd/browser.js' )
+```
+
+To vendor stdlib functionality and avoid installing dependency trees for Node.js, you can use the UMD server build:
+
+```javascript
+var cfillEqual = require( 'path/to/vendor/umd/blas-ext-base-cfill-equal/index.js' )
+```
+
+To include the bundle in a webpage,
+
+```html
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-cfill-equal@umd/browser.js"></script>
+```
+
+If no recognized module system is present, access bundle contents via the global scope:
+
+```html
+<script type="text/javascript">
+(function () {
+    window.cfillEqual;
+})();
+</script>
 ```
 
 #### cfillEqual( N, searchElement, alpha, x, strideX )
@@ -181,11 +187,16 @@ cfillEqual.ndarray( 3, searchElement, alpha, x, 1, x.length-3 );
 
 <!-- eslint no-undef: "error" -->
 
-```javascript
-var zeros = require( '@stdlib/array-zeros' );
-var Complex64 = require( '@stdlib/complex-float32-ctor' );
-var logEach = require( '@stdlib/console-log-each' );
-var cfillEqual = require( '@stdlib/blas-ext-base-cfill-equal' );
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/array-zeros@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/complex-float32-ctor@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/console-log-each@umd/browser.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/stdlib-js/blas-ext-base-cfill-equal@umd/browser.js"></script>
+<script type="text/javascript">
+(function () {
 
 var x = zeros( 10, 'complex64' );
 logEach( '%s', x );
@@ -195,6 +206,11 @@ var alpha = new Complex64( 5.0, 5.0 );
 
 cfillEqual( x.length, searchElement, alpha, x, 1 );
 logEach( '%s', x );
+
+})();
+</script>
+</body>
+</html>
 ```
 
 </section>
@@ -203,143 +219,7 @@ logEach( '%s', x );
 
 <!-- C interface documentation. -->
 
-* * *
 
-<section class="c">
-
-## C APIs
-
-<!-- Section to include introductory text. Make sure to keep an empty line after the intro `section` element and another before the `/section` close. -->
-
-<section class="intro">
-
-</section>
-
-<!-- /.intro -->
-
-<!-- C usage documentation. -->
-
-<section class="usage">
-
-### Usage
-
-```c
-#include "stdlib/blas/ext/base/cfill_equal.h"
-```
-
-#### stdlib_strided_cfill_equal( N, searchElement, alpha, \*X, strideX )
-
-Replaces single-precision complex floating-point strided array elements equal to a provided search element with a specified scalar constant.
-
-```c
-#include "stdlib/complex/float32/ctor.h"
-
-float x[] = { 1.0f, 2.0f, 0.0f, 0.0f, 3.0f, 4.0f, 0.0f, 0.0f };
-const stdlib_complex64_t searchElement = stdlib_complex64( 0.0f, 0.0f );
-const stdlib_complex64_t alpha = stdlib_complex64( 5.0f, 5.0f );
-
-stdlib_strided_cfill_equal( 4, searchElement, alpha, (stdlib_complex64_t *)x, 1 );
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **searchElement**: `[in] stdlib_complex64_t` search element.
--   **alpha**: `[in] stdlib_complex64_t` scalar constant.
--   **X**: `[inout] stdlib_complex64_t*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length.
-
-```c
-void stdlib_strided_cfill_equal( const CBLAS_INT N, const stdlib_complex64_t searchElement, const stdlib_complex64_t alpha, stdlib_complex64_t *X, const CBLAS_INT strideX );
-```
-
-<!-- lint disable maximum-heading-length -->
-
-#### stdlib_strided_cfill_equal_ndarray( N, searchElement, alpha, \*X, strideX, offsetX )
-
-<!-- lint enable maximum-heading-length -->
-
-Replaces single-precision complex floating-point strided array elements equal to a provided search element with a specified scalar constant using alternative indexing semantics.
-
-```c
-#include "stdlib/complex/float32/ctor.h"
-
-float x[] = { 1.0f, 2.0f, 0.0f, 0.0f, 3.0f, 4.0f, 0.0f, 0.0f };
-const stdlib_complex64_t searchElement = stdlib_complex64( 0.0f, 0.0f );
-const stdlib_complex64_t alpha = stdlib_complex64( 5.0f, 5.0f );
-
-stdlib_strided_cfill_equal_ndarray( 4, searchElement, alpha, (stdlib_complex64_t *)x, 1, 0 );
-```
-
-The function accepts the following arguments:
-
--   **N**: `[in] CBLAS_INT` number of indexed elements.
--   **searchElement**: `[in] stdlib_complex64_t` search element.
--   **alpha**: `[in] stdlib_complex64_t` scalar constant.
--   **X**: `[inout] stdlib_complex64_t*` input array.
--   **strideX**: `[in] CBLAS_INT` stride length.
--   **offsetX**: `[in] CBLAS_INT` starting index.
-
-```c
-void stdlib_strided_cfill_equal_ndarray( const CBLAS_INT N, const stdlib_complex64_t searchElement, const stdlib_complex64_t alpha, stdlib_complex64_t *X, const CBLAS_INT strideX, const CBLAS_INT offsetX );
-```
-
-</section>
-
-<!-- /.usage -->
-
-<!-- C API usage notes. Make sure to keep an empty line after the `section` element and another before the `/section` close. -->
-
-<section class="notes">
-
-</section>
-
-<!-- /.notes -->
-
-<!-- C API usage examples. -->
-
-<section class="examples">
-
-### Examples
-
-```c
-#include "stdlib/blas/ext/base/cfill_equal.h"
-#include "stdlib/complex/float32/ctor.h"
-#include <stdio.h>
-
-int main( void ) {
-    // Create a strided array of interleaved real and imaginary components:
-    float x[] = { 1.0f, 2.0f, 0.0f, 0.0f, 3.0f, 4.0f, 0.0f, 0.0f };
-
-    // Create a complex search element:
-    const stdlib_complex64_t searchElement = stdlib_complex64( 0.0f, 0.0f );
-
-    // Create a complex scalar constant:
-    const stdlib_complex64_t alpha = stdlib_complex64( 5.0f, 5.0f );
-
-    // Specify the number of indexed elements:
-    const int N = 4;
-
-    // Specify a stride:
-    const int strideX = 1;
-
-    // Replace elements equal to `0.0 + 0.0i`:
-    stdlib_strided_cfill_equal( N, searchElement, alpha, (stdlib_complex64_t *)x, strideX );
-
-    // Print the result:
-    for ( int i = 0; i < N; i++ ) {
-        printf( "x[ %i ] = %f + %fj\n", i, x[ i*2 ], x[ (i*2)+1 ] );
-    }
-}
-```
-
-</section>
-
-<!-- /.examples -->
-
-</section>
-
-<!-- /.c -->
 
 <!-- Section for related `stdlib` packages. Do not manually edit this section, as it is automatically populated. -->
 
@@ -421,7 +301,7 @@ Copyright &copy; 2016-2026. The Stdlib [Authors][stdlib-authors].
 
 [stdlib-license]: https://raw.githubusercontent.com/stdlib-js/blas-ext-base-cfill-equal/main/LICENSE
 
-[@stdlib/array/complex64]: https://github.com/stdlib-js/array-complex64
+[@stdlib/array/complex64]: https://github.com/stdlib-js/array-complex64/tree/umd
 
 [mdn-typed-array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
 
